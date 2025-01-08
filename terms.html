@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Previous head content remains the same -->
+    <style>
+    /* Add these new styles for the modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 700px;
+        max-height: 80vh;
+        overflow-y: auto;
+        border-radius: 8px;
+    }
+
+    .modal-header {
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 15px;
+    }
+
+    .modal-footer {
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid #ddd;
+        text-align: right;
+    }
+
+    .terms-content {
+        max-height: 50vh;
+        overflow-y: auto;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+        margin: 15px 0;
+    }
+
+    .btn-agree {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        margin-left: 10px;
+        border-radius: 4px;
+    }
+
+    .btn-disagree {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+    }
+    </style>
+</head>
+<body>
+    <!-- Previous body content remains the same until the form -->
+    
+    <!-- Add this modal structure after the form -->
+    <div id="termsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Terms and Conditions</h3>
+            </div>
+            <div class="terms-content">
+                <h4>1. Booking Terms</h4>
+                <p>By proceeding with this booking, you agree to the following terms and conditions:</p>
+                <ul>
+                    <li>All visitors must carry valid identification documents</li>
+                    <li>Photography may be restricted in certain areas</li>
+                    <li>Visitors must follow all safety guidelines provided by the staff</li>
+                    <li>The organization reserves the right to modify or cancel bookings</li>
+                </ul>
+
+                <h4>2. Safety Protocols</h4>
+                <p>For your safety and others:</p>
+                <ul>
+                    <li>Follow all safety instructions given by the power station staff</li>
+                    <li>Wear appropriate safety gear when provided</li>
+                    <li>Stay with your assigned guide at all times</li>
+                    <li>Do not touch any equipment without permission</li>
+                </ul>
+
+                <h4>3. Cancellation Policy</h4>
+                <p>Please note our cancellation policy:</p>
+                <ul>
+                    <li>Cancellations must be made at least 48 hours before the scheduled visit</li>
+                    <li>No-shows may affect future booking privileges</li>
+                    <li>Rescheduling is subject to availability</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-disagree" onclick="disagreedTerms()">Disagree</button>
+                <button class="btn-agree" onclick="agreedTerms()">I Agree</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modify the form to include an ID -->
+    <form id="bookingForm" action="success.php" method="post" enctype="multipart/form-data" autocomplete="off">
+        <!-- Previous form content remains the same -->
+        <button class="btn btn-primary" type="button" onclick="showTerms()">Submit</button>
+        <a href="index.php" class="btn btn-default">Back to Calendar</a>
+    </form>
+
+    <!-- Add this JavaScript before the closing body tag -->
+    <script>
+    const modal = document.getElementById("termsModal");
+    const form = document.getElementById("bookingForm");
+
+    function showTerms() {
+        // Validate form first
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+        modal.style.display = "block";
+    }
+
+    function agreedTerms() {
+        modal.style.display = "none";
+        // Submit the form
+        form.submit();
+    }
+
+    function disagreedTerms() {
+        modal.style.display = "none";
+        alert("You must agree to the terms and conditions to proceed with the booking.");
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    </script>
+</body>
+</html>
